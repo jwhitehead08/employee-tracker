@@ -130,7 +130,41 @@ function addEmployee() {
       });
   }
 
-// update employee role function
+
+// update an employee
+function updateEmployee() {
+    inquirer
+      .prompt([
+        {
+            type: "list",
+            name: "employeeSelect",
+            message: "Which employee would you like to update? (Required)",
+            choices: ["Joe", "Sarah", "Jack", "Flint"]
+        },
+        {
+            type: "list",
+            name: "roleId",
+            message: "What role would you like to assign to this employee? (Required)",
+            choices: ["1", "2", "3"]
+        }
+      ])
+      .then(({ employeeSelect, roleId }) => {
+  
+        db.query(
+          "UPDATE employees SET role_id = ? WHERE employ_firstname = ?;",
+          [roleId, employeeSelect],
+          function (error, data) {
+          if (error) throw error;
+            console.table(data);
+          
+            startPrompt();
+          }
+        );
+      });
+  }
+      
+
+
 
 // function to prompt user
 function startPrompt() {
@@ -146,7 +180,7 @@ function startPrompt() {
           "Add department",
           "Add role",
           "Add employee",
-          "Update an Employee Roles",
+          "Update an Employee Role",
           "Exit App",
         ],
         message: "Welcome, please select an option",
