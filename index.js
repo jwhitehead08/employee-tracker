@@ -88,7 +88,47 @@ function addRole() {
     });
 }
 
-// add employee function
+// function to add employee
+function addEmployee() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "employeeFirstName",
+          message: "What is the employee's first name? (Required)",
+        }, 
+        {
+          type: "input",
+          name: "employeeLastName",
+          message: "What is the employee's last name? (Required)"
+        },
+        {
+          type: "list",
+          name: "roleId",
+          message: "What role ID is associated with this employee? (Required)",
+          choices: ["1", "2", "3"]
+        },
+        {
+            type: "list",
+            name: "managerId",
+            message: "What manager ID is associated with this employee? (Required)",
+            choices: ["1", "2", "3"]
+        }
+      ])
+      .then(({ employeeFirstName, employeeLastName, roleId, managerId }) => {
+  
+        db.query(
+          "INSERT INTO employees (employ_firstname, employ_lasttname, role_id, manager_id) VALUES (?, ?, ?, ?);",
+          [employeeFirstName, employeeLastName, roleId, managerId],
+          function (error, data) {
+          if (error) throw error;
+            console.table(data);
+          
+            startPrompt();
+          }
+        );
+      });
+  }
 
 // update employee role function
 
@@ -120,7 +160,7 @@ function startPrompt() {
         case "Add role":
           addRole();
           break;
-        case "Add Employee":
+        case "Add employee":
           addEmployee();
           break;
         case "Update an Employee Role":
@@ -142,59 +182,6 @@ function startPrompt() {
       }
     });
 }
-
-// // Department questions
-// let departmentQuestion = [
-//   {
-//     type: "input",
-//     name: "departmentName",
-//     message: "What is the department name? (Required)",
-//     validate: (departmentNameInput) => {
-//       if (departmentNameInput) {
-//         return true;
-//       } else {
-//         console.log("Please enter a department name!");
-//         return false;
-//       }
-//     },
-//   },
-// ];
-
-// Roles questions
-let rolesQuestion = [
-  {
-    type: "input",
-    name: "jobTitle",
-    message: "What is the job title? (Required)",
-    validate: (jobTitleInput) => {
-      if (jobTitleInput) {
-        return true;
-      } else {
-        console.log("Please enter a job title!");
-        return false;
-      }
-    },
-  },
-  {
-    type: "input",
-    name: "salary",
-    message: "Enter the salary(Required)",
-    validate: (salaryIdInput) => {
-      if (salaryIdInput) {
-        return true;
-      } else {
-        console.log("Please enter a salary!");
-        return false;
-      }
-    },
-  },
-  {
-    type: "list",
-    name: "roleDepartment",
-    message: "What department does this role belong to?",
-    choices: ["IT", "HR", "Sales", "Marketing"]
-  },
-];
 
 
 
