@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const db = require("./db/connection");
 require("console.table");
 
-// functions for viewing tables
+// function for viewing department
 function viewDepartment() {
   db.query("select * from departments;", function (error, data) {
     if (error) throw error;
@@ -12,6 +12,7 @@ function viewDepartment() {
   });
 }
 
+// function for viewing roles
 function viewRoles() {
   db.query("select * from roles;", function (error, data) {
     if (error) throw error;
@@ -20,6 +21,7 @@ function viewRoles() {
   });
 }
 
+// function for viewing employees
 function viewEmployees() {
   db.query("select * from employees;", function (error, data) {
     if (error) throw error;
