@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const db = require("./db/connection");
 require("console.table");
 
-// how to connect these to seeds????
+// functions for viewing tables
 function viewDepartment() {
   db.query("select * from departments;", function (error, data) {
     if (error) throw error;
@@ -28,6 +28,7 @@ function viewEmployees() {
   });
 }
 
+// function to add department
 function addDepartment() {
   console.log("Add Department");
   inquirer
@@ -161,6 +162,7 @@ function updateEmployee() {
     });
 }
 
+// BONUS - view combined salary for a department
 function viewDepartmentSalary() {
     inquirer
       .prompt([
